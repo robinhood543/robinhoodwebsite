@@ -217,9 +217,9 @@ a:hover{color:#5FE868}
   <svg width="34" height="68" style="color:#00C805;animation:rglow 3s ease-in-out infinite"><use href="#f-feather"></use></svg>
   <div style="font-family:'Titan One',sans-serif;font-size:44px;color:#F4E9CF;letter-spacing:1px">$ROBIN</div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Telegram</a>
-    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">X</a>
-    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Dexscreener</a>
+    <a href="https://t.me/robinhoodportl" target="_blank" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Telegram</a>
+    <a href="https://x.com/ROBINHO0D_eth" target="_blank" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">X</a>
+    <a href="https://dexscreener.com/robinhood/0xbe176ca6ea6a95f69a04e69dca5edecedcf86d69" target="_blank" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Dexscreener</a>
   </div>
   <div style="font-size:12px;color:rgba(244,233,207,0.4);text-align:center;max-width:64ch;line-height:1.6">© Sherwood Forest, onchain. Prince John was not harmed in the making of this website. He cried anyway.</div>
 </footer>
@@ -239,10 +239,10 @@ class Component extends DCLogic {
       grainTexture: this.props.grainTexture ?? true,
       menuOpen: this.state.menuOpen,
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
-      contractLabel: "0x0000...0DELALLY",
+      contractLabel: "0xBe17...86d69",
       copyLabel: this.state.copied ? "COPIED! OO-DE-LALLY" : "COPY CA",
       copyContract: () => {
-        try { navigator.clipboard.writeText("0x0000000000000000000000000000000000000000"); } catch (e) {}
+        try { navigator.clipboard.writeText("0xBe176Ca6EA6A95f69A04e69dcA5EdeCEDcf86d69"); } catch (e) {}
         this.setState({ copied: true });
         clearTimeout(this._ct);
         this._ct = setTimeout(() => this.setState({ copied: false }), 2200);

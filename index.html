@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Outfit:wght@400;500;600;700&family=Pirata+One&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#0A3D25;color:#F4E9CF;font-family:'Outfit',sans-serif;overflow-x:hidden}
+a{color:#00C805;text-decoration:none}
+a:hover{color:#5FE868}
+::selection{background:#00C805;color:#062616}
+@keyframes rbreathe{0%,100%{transform:rotate(-0.5deg) translateY(0)}50%{transform:rotate(0.6deg) translateY(-2px)}}
+@keyframes rsway{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(7deg)}}
+@keyframes rhint{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(8px);opacity:.45}}
+@keyframes rglow{0%,100%{opacity:.55}50%{opacity:1}}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="f-feather" viewBox="0 0 48 96">
+      <path d="M24 0 L34 17 L27 13.4 C31 31 31 53 24 76 C17 53 17 31 21 13.4 L14 17 Z" fill="currentColor"></path>
+      <path d="M24 14 L24 93" stroke="currentColor" stroke-width="2.4" fill="none"></path>
+      <path d="M24 34 L30.5 29 M24 48 L17.5 43 M24 60 L30 55" stroke="#0A3D25" stroke-width="2" fill="none" opacity="0.55"></path>
+    </symbol>
+    <symbol id="f-arrow" viewBox="0 0 48 210">
+      <path d="M24 2 C14 9 11 28 13.5 44 L24 37 L34.5 44 C37 28 34 9 24 2 Z" fill="#00C805"></path>
+      <path d="M18 16 L24 21 L30 16 M16.5 28 L24 33 L31.5 28" stroke="#0A3D25" stroke-width="2.4" fill="none" opacity="0.5"></path>
+      <rect x="21.6" y="34" width="4.8" height="146" rx="2.4" fill="#8A5A2B"></rect>
+      <path d="M24 208 L11 172 L24 181 L37 172 Z" fill="#F4E9CF"></path>
+    </symbol>
+    
+  </defs>
+</svg>
+
+<nav data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 34px;background:linear-gradient(to bottom, rgba(6,33,19,0.85), rgba(6,33,19,0));pointer-events:none">
+  <a href="#top" style="display:flex;align-items:center;gap:10px;pointer-events:auto">
+    <svg width="20" height="40" style="color:#00C805;display:block"><use href="#f-feather"></use></svg>
+    <span style="font-family:'Titan One',sans-serif;font-size:26px;color:#F4E9CF;letter-spacing:1px">$ROBIN</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:34px;pointer-events:auto">
+    <div style="display:flex;gap:30px;font-weight:600;font-size:15px;letter-spacing:0.4px" data-navlinks>
+      <a href="#top" style="color:#F4E9CF" style-hover="color:#00C805">About</a>
+      <a href="#lore" style="color:#F4E9CF" style-hover="color:#00C805">Lore</a>
+      <a href="#gallery" style="color:#F4E9CF" style-hover="color:#00C805">Gallery</a>
+      <a href="#buy" style="color:#F4E9CF" style-hover="color:#00C805">How to Buy</a>
+    </div>
+    <button onClick="{{ toggleMenu }}" style="font-family:'Titan One',sans-serif;font-size:14px;letter-spacing:2px;color:#062616;background:#00C805;border:none;border-radius:999px;padding:10px 22px;cursor:pointer" style-hover="background:#5FE868;transform:translateY(-2px)">MENU</button>
+  </div>
+</nav>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:70;background:rgba(6,33,19,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+    <button onClick="{{ toggleMenu }}" style="position:absolute;top:22px;right:34px;font-family:'Titan One',sans-serif;font-size:14px;letter-spacing:2px;color:#F4E9CF;background:transparent;border:2px solid rgba(244,233,207,0.4);border-radius:999px;padding:10px 22px;cursor:pointer" style-hover="border-color:#00C805;color:#00C805">CLOSE</button>
+    <a href="#top" onClick="{{ toggleMenu }}" style="font-family:'Titan One',sans-serif;font-size:52px;color:#F4E9CF" style-hover="color:#00C805">About</a>
+    <a href="#lore" onClick="{{ toggleMenu }}" style="font-family:'Titan One',sans-serif;font-size:52px;color:#F4E9CF" style-hover="color:#00C805">Lore</a>
+    <a href="#gallery" onClick="{{ toggleMenu }}" style="font-family:'Titan One',sans-serif;font-size:52px;color:#F4E9CF" style-hover="color:#00C805">Gallery</a>
+    <a href="#buy" onClick="{{ toggleMenu }}" style="font-family:'Titan One',sans-serif;font-size:52px;color:#F4E9CF" style-hover="color:#00C805">How to Buy</a>
+    <svg width="26" height="52" style="color:#00C805;margin-top:26px;opacity:0.8"><use href="#f-feather"></use></svg>
+  </div>
+</sc-if>
+
+<sc-if value="{{ gutterTrail }}" hint-placeholder-val="{{ true }}">
+  <div data-gutter style="position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:14px;pointer-events:none">
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+    <svg data-f width="13" height="26" style="color:#00C805;opacity:0.18;transition:opacity 0.4s"><use href="#f-feather"></use></svg>
+  </div>
+</sc-if>
+
+<div id="top" data-hero-wrap data-screen-label="Hero" style="height:420vh;position:relative">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#062616">
+
+    <canvas data-hero-canvas style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:11vh;pointer-events:none;will-change:transform,opacity" data-hero-copy>
+      <div style="font-family:'Titan One',sans-serif;font-size:clamp(64px,11vw,170px);line-height:0.9;color:#F4E9CF;text-shadow:0 4px 28px rgba(6,38,22,0.55), 0 6px 0 rgba(6,38,22,0.2);letter-spacing:2px">$ROBIN</div>
+      <div style="margin-top:18px;display:flex;align-items:center;gap:12px;font-size:clamp(15px,1.6vw,21px);font-weight:600;color:#00C805;letter-spacing:0.6px;background:rgba(6,38,22,0.78);border:1px solid rgba(0,200,5,0.25);border-radius:999px;padding:10px 24px">
+        <svg width="11" height="22" style="color:#00C805;opacity:0.9"><use href="#f-feather"></use></svg>
+        <span>{{ tagline }}</span>
+        <svg width="11" height="22" style="color:#00C805;opacity:0.9;transform:scaleX(-1)"><use href="#f-feather"></use></svg>
+      </div>
+    </div>
+
+    <div data-hero-shrub style="position:absolute;inset:0;pointer-events:none;transform:translateY(112%);will-change:transform">
+      <div data-shrub-layer="back" style="position:absolute;left:-2%;right:-2%;top:-24vh;height:160vh;will-change:transform">
+        <div style="position:absolute;left:0;right:0;top:calc(26vh - 2px);bottom:0;background:#0D4A2E"></div>
+        <svg viewBox="0 0 1600 220" preserveAspectRatio="none" style="width:100%;height:26vh;display:block;transform:scaleX(-1)">
+          <path d="M0 220 L0 120 C 40 70 90 110 140 80 C 200 45 260 100 320 70 C 380 40 440 95 500 75 C 560 50 620 100 690 65 C 760 35 820 90 880 70 C 940 45 1000 95 1060 70 C 1120 40 1180 90 1240 65 C 1300 40 1360 95 1420 75 C 1480 55 1540 100 1600 80 L1600 220 Z" fill="#0D4A2E"></path>
+        </svg>
+      </div>
+      <div data-shrub-layer="mid" style="position:absolute;left:-2%;right:-2%;top:-15vh;height:150vh;will-change:transform">
+        <div style="position:absolute;left:0;right:0;top:calc(24vh - 2px);bottom:0;background:#073322"></div>
+        <svg viewBox="0 0 1600 220" preserveAspectRatio="none" style="width:100%;height:24vh;display:block">
+          <path d="M0 220 L0 100 C 60 55 120 105 190 70 C 260 38 330 95 400 65 C 470 38 540 92 610 68 C 680 45 750 98 830 62 C 910 30 980 88 1050 66 C 1120 45 1190 96 1260 64 C 1330 35 1400 90 1470 70 C 1520 56 1570 95 1600 78 L1600 220 Z" fill="#073322"></path>
+        </svg>
+      </div>
+      <div data-shrub-layer="front" style="position:absolute;left:-2%;right:-2%;top:-8vh;height:140vh;will-change:transform">
+        <div style="position:absolute;left:0;right:0;top:calc(20vh - 2px);bottom:0;background:#051F12"></div>
+        <svg viewBox="0 0 1600 220" preserveAspectRatio="none" style="width:100%;height:20vh;display:block">
+          <path d="M0 220 L0 90 C 50 40 110 90 180 55 C 250 22 320 80 390 50 C 460 25 530 78 600 52 C 670 30 740 84 820 48 C 900 15 970 74 1040 52 C 1110 32 1180 82 1250 50 C 1320 22 1390 76 1460 56 C 1510 42 1560 82 1600 62 L1600 220 Z" fill="#051F12"></path>
+        </svg>
+      </div>
+      <div style="position:absolute;left:0;right:0;top:11vh;bottom:-4vh;background:linear-gradient(to bottom, #051F12, #0A3D25 34%)"></div>
+    </div>
+
+    <div data-hero-hint style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(6,38,22,0.72);border:1px solid rgba(0,200,5,0.2);border-radius:999px;padding:12px 26px;animation:rhint 2.2s ease-in-out infinite">
+      <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:rgba(244,233,207,0.75)">SCROLL TO FIRE</span>
+      <svg width="14" height="28" style="color:#00C805;transform:rotate(180deg)"><use href="#f-feather"></use></svg>
+    </div>
+  </div>
+</div>
+
+<section id="lore" data-screen-label="Lore" style="position:relative;z-index:1;padding:4vh 24px 90px;display:flex;justify-content:center">
+  <svg width="520" height="1040" viewBox="0 0 48 96" style="position:absolute;right:-140px;top:8%;color:#00C805;opacity:0.035;pointer-events:none"><use href="#f-feather"></use></svg>
+  <div data-lore-hold style="position:relative;max-width:860px;width:100%">
+    <div style="position:sticky;top:5vh">
+    <div data-arrow-landed style="position:absolute;top:-74px;left:8%;opacity:0;transition:opacity 0.5s;filter:drop-shadow(0 0 12px rgba(0,200,5,0.5));z-index:2">
+      <svg width="42" height="182" viewBox="0 0 48 210" style="transform:rotate(-14deg)"><use href="#f-arrow"></use></svg>
+    </div>
+    <div style="height:34px;background:#C9A24B;border-radius:17px;box-shadow:0 4px 12px rgba(0,0,0,0.35);position:relative;z-index:2;margin:0 -22px"></div>
+    <div data-parchwrap style="position:relative">
+    <div data-parchment style="background:#F4E9CF;color:#123B26;padding:70px clamp(28px,7vw,90px) 80px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.35);will-change:clip-path">
+      
+      <svg width="300" height="600" viewBox="0 0 48 96" style="position:absolute;right:-30px;top:12%;color:#0A3D25;opacity:0.05;pointer-events:none"><use href="#f-feather"></use></svg>
+      <div data-reveal style="display:flex;align-items:center;gap:12px;color:#8A5A2B;font-weight:700;font-size:13px;letter-spacing:3px">
+        <svg width="11" height="22" style="color:#C8622D"><use href="#f-feather"></use></svg>
+        <span>CHAPTER I: THE SHERWOOD MEMPOOL</span>
+      </div>
+      <h2 data-reveal style="font-family:'Pirata One',serif;font-size:clamp(44px,6.5vw,78px);line-height:1;margin:18px 0 30px;color:#0A3D25">The Legend of $ROBIN</h2>
+      <p data-reveal style="font-size:clamp(17px,1.5vw,20px);line-height:1.7;margin:0 0 22px;max-width:64ch">Once upon a time in the Sherwood mempool, a fox in a stupid little hat decided the taxes were too damn high.</p>
+      <p data-reveal style="font-size:clamp(17px,1.5vw,20px);line-height:1.7;margin:0 0 22px;max-width:64ch">Prince John, a thumb-sucking, mummy-obsessed lion who isn't even the real king, had been rug-pulling the peasants of Nottingham for years, with his snitch-ass snake advisor Sir Hiss whispering FUD in his royal ear.</p>
+      <blockquote data-reveal style="font-family:'Pirata One',serif;font-size:clamp(26px,3.2vw,38px);line-height:1.2;color:#C8622D;margin:34px 0;padding-left:26px;border-left:5px solid #00C805">"Double the taxes! Triple the taxes!"</blockquote>
+      <p data-reveal style="font-size:clamp(17px,1.5vw,20px);line-height:1.7;margin:0 0 22px;max-width:64ch">His enforcer? The Sheriff of Nottingham, a fat, corrupt wolf who once taxed a baby bunny's birthday penny. Fully liquidated a child. On his birthday.</p>
+      <p data-reveal style="font-size:clamp(17px,1.5vw,20px);line-height:1.7;margin:0 0 22px;max-width:64ch">So Robin did what any good degen does: borrowed liquidity from those who could afford it, and airdropped it straight to the poor.</p>
+      <blockquote data-reveal style="font-family:'Pirata One',serif;font-size:clamp(26px,3.2vw,38px);line-height:1.2;color:#0A3D25;margin:34px 0;padding-left:26px;border-left:5px solid #00C805">"We never rob. We just sort of borrow a bit from those who can afford it."</blockquote>
+      <p data-reveal style="font-size:clamp(17px,1.5vw,20px);line-height:1.7;margin:0;max-width:64ch">Now he's back on Robinhood L2, fletching every arrow with the chain's own feather. The rich are nervous. The peasants are aping. <strong style="color:#0A3D25">Oo-de-lally, golly what a day.</strong></p>
+    </div>
+    <div data-roll-bar style="position:absolute;left:-22px;right:-22px;top:100%;height:34px;margin-top:-17px;background:#C9A24B;border-radius:17px;box-shadow:0 8px 16px rgba(0,0,0,0.4);z-index:2"></div>
+    </div>
+    </div>
+    <div style="height:175vh"></div>
+  </div>
+</section>
+
+<section id="gallery" data-screen-label="Gallery" style="padding:60px 24px 140px;max-width:1240px;margin:0 auto">
+  <div data-reveal style="display:flex;align-items:center;gap:14px;justify-content:center;color:#00C805;font-weight:700;font-size:13px;letter-spacing:3px">
+    <svg width="11" height="22"><use href="#f-feather"></use></svg>
+    <span>THE MERRY MEN (AND VILLAINS)</span>
+    <svg width="11" height="22" style="transform:scaleX(-1)"><use href="#f-feather"></use></svg>
+  </div>
+  <h2 data-reveal style="font-family:'Titan One',sans-serif;font-size:clamp(40px,6vw,72px);text-align:center;margin:14px 0 56px;color:#F4E9CF">The Cast</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:26px">
+    <sc-for list="{{ chars }}" as="c" hint-placeholder-count="8">
+      <div data-reveal style="position:relative;background:#0E4A2E;border:1px solid rgba(0,200,5,0.18);border-radius:20px;padding:16px 16px 22px;transition:transform 0.25s, box-shadow 0.25s, border-color 0.25s" style-hover="transform:translateY(-8px) rotate(-0.6deg);border-color:rgba(0,200,5,0.55);box-shadow:0 18px 44px rgba(0,0,0,0.4), 0 0 24px rgba(0,200,5,0.12)">
+        <svg width="14" height="28" style="position:absolute;top:16px;right:16px;color:#00C805;opacity:0.4;z-index:2"><use href="#f-feather"></use></svg>
+        <div style="height:230px;border-radius:12px;overflow:hidden;background:#0A3D25">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ c.slot }}" shape="rect" src="{{ c.src }}" placeholder="{{ c.ph }}" hint-size="100%,230px"></x-import>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-top:16px">
+          <div style="font-family:'Titan One',sans-serif;font-size:21px;color:#F4E9CF">{{ c.name }}</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:{{ c.tagColor }};white-space:nowrap">{{ c.tag }}</div>
+        </div>
+        <div style="font-size:14.5px;line-height:1.5;color:rgba(244,233,207,0.78);margin-top:6px">{{ c.line }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="buy" data-screen-label="How to Buy" style="padding:40px 24px 130px;max-width:1180px;margin:0 auto">
+  <div data-reveal style="display:flex;align-items:center;gap:14px;justify-content:center;color:#00C805;font-weight:700;font-size:13px;letter-spacing:3px">
+    <svg width="11" height="22"><use href="#f-feather"></use></svg>
+    <span>JOIN THE HEIST</span>
+    <svg width="11" height="22" style="transform:scaleX(-1)"><use href="#f-feather"></use></svg>
+  </div>
+  <h2 data-reveal style="font-family:'Titan One',sans-serif;font-size:clamp(40px,6vw,72px);text-align:center;margin:14px 0 56px;color:#F4E9CF">How to Buy</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+      <div data-reveal style="position:relative;background:#0E4A2E;border:1px solid rgba(0,200,5,0.18);border-radius:20px;padding:28px 24px 30px;transition:transform 0.25s, border-color 0.25s" style-hover="transform:translateY(-6px);border-color:rgba(0,200,5,0.5)">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="font-family:'Titan One',sans-serif;font-size:44px;color:#00C805;line-height:1">{{ s.n }}</div>
+          <svg width="10" height="20" style="color:#00C805;opacity:0.5;transform:rotate(90deg)"><use href="#f-feather"></use></svg>
+        </div>
+        <div style="font-family:'Titan One',sans-serif;font-size:20px;color:#F4E9CF;margin:14px 0 8px">{{ s.title }}</div>
+        <div style="font-size:14.5px;line-height:1.55;color:rgba(244,233,207,0.78)">{{ s.body }}</div>
+        <div style="font-size:13px;font-style:italic;color:#00C805;margin-top:12px;opacity:0.9">{{ s.quip }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div data-reveal style="margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:22px">
+    <button onClick="{{ copyContract }}" style="display:flex;align-items:center;gap:12px;background:#062616;border:1px solid rgba(0,200,5,0.35);border-radius:999px;padding:14px 24px;cursor:pointer;color:#F4E9CF;font-family:ui-monospace,Menlo,monospace;font-size:15px;transition:border-color 0.2s" style-hover="border-color:#00C805">
+      <svg width="10" height="20" style="color:#00C805"><use href="#f-feather"></use></svg>
+      <span>{{ contractLabel }}</span>
+      <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;color:#00C805">{{ copyLabel }}</span>
+    </button>
+    <a href="#buy" style="display:flex;align-items:center;gap:14px;background:#00C805;color:#062616;font-family:'Titan One',sans-serif;font-size:clamp(22px,2.6vw,30px);letter-spacing:1px;border-radius:999px;padding:20px 52px;box-shadow:0 10px 34px rgba(0,200,5,0.35);transition:transform 0.2s, box-shadow 0.2s" style-hover="transform:translateY(-4px) scale(1.02);box-shadow:0 16px 44px rgba(0,200,5,0.5);color:#062616">
+      <svg width="16" height="32" style="color:#062616"><use href="#f-feather"></use></svg>
+      <span>BUY $ROBIN</span>
+    </a>
+    <div style="font-size:13px;color:rgba(244,233,207,0.55);font-style:italic">That's it. That's the whole strategy.</div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="background:#062616;padding:70px 24px 40px;display:flex;flex-direction:column;align-items:center;gap:26px">
+  <svg width="34" height="68" style="color:#00C805;animation:rglow 3s ease-in-out infinite"><use href="#f-feather"></use></svg>
+  <div style="font-family:'Titan One',sans-serif;font-size:44px;color:#F4E9CF;letter-spacing:1px">$ROBIN</div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Telegram</a>
+    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">X</a>
+    <a href="#top" style="border:1px solid rgba(0,200,5,0.3);border-radius:999px;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:1px;color:#F4E9CF;transition:border-color 0.2s,color 0.2s" style-hover="border-color:#00C805;color:#00C805">Dexscreener</a>
+  </div>
+  <div style="font-size:12px;color:rgba(244,233,207,0.4);text-align:center;max-width:64ch;line-height:1.6">© Sherwood Forest, onchain. Prince John was not harmed in the making of this website. He cried anyway.</div>
+</footer>
+
+<sc-if value="{{ grainTexture }}" hint-placeholder-val="{{ true }}">
+  <div style="position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0.05;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E&quot;)"></div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;transitionStart&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.84,&quot;min&quot;:0.7,&quot;max&quot;:0.98,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;tagline&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Rob from the rich and give to the poor&quot;,&quot;Steal from the rich. Ape with the poor.&quot;,&quot;Rob the Prince. Feed the degens.&quot;],&quot;default&quot;:&quot;Rob from the rich and give to the poor&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Copy&quot;},&quot;gutterTrail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;grainTexture&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Texture&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, copied: false };
+
+  renderVals() {
+    return {
+      tagline: this.props.tagline ?? "Rob from the rich and give to the poor",
+      gutterTrail: this.props.gutterTrail ?? true,
+      grainTexture: this.props.grainTexture ?? true,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      contractLabel: "0x0000...0DELALLY",
+      copyLabel: this.state.copied ? "COPIED! OO-DE-LALLY" : "COPY CA",
+      copyContract: () => {
+        try { navigator.clipboard.writeText("0x0000000000000000000000000000000000000000"); } catch (e) {}
+        this.setState({ copied: true });
+        clearTimeout(this._ct);
+        this._ct = setTimeout(() => this.setState({ copied: false }), 2200);
+      },
+      chars: [
+        { name: "Robin Hood", tag: "FOUNDER", tagColor: "#00C805", slot: "card-robin", src: "assets/cast/robin.png", ph: "Drop Robin (fox archer) art", line: "The Founder. Anonymous. Wanted by the SEC of Nottingham." },
+        { name: "Little John", tag: "CO-DEV", tagColor: "#00C805", slot: "card-john", src: "assets/cast/littlejohn.webp", ph: "Drop Little John (bear) art", line: "Co-dev. Big guy. \u201cAre we good guys or bad guys?\u201d" },
+        { name: "Maid Marian", tag: "COMMUNITY", tagColor: "#00C805", slot: "card-marian", src: "assets/cast/marian.webp", ph: "Drop Maid Marian (vixen) art", line: "The community's beloved. WAGMI queen of Sherwood." },
+        { name: "Prince John", tag: "VILLAIN", tagColor: "#C8622D", slot: "card-pj", src: "assets/cast/princejohn.jpg", ph: "Drop Prince John (lion) art", line: "CEX villain. Cries for his mummy. Sucks his thumb when the chart dumps." },
+        { name: "Sir Hiss", tag: "VILLAIN", tagColor: "#C8622D", slot: "card-hiss", src: "assets/cast/hiss.webp", ph: "Drop Sir Hiss (snake) art", line: "Chief FUD Officer. Reluctant reptile. Hypnotizes nobody important." },
+        { name: "The Sheriff", tag: "VILLAIN", tagColor: "#C8622D", slot: "card-sheriff", src: "assets/cast/sheriff.webp", ph: "Drop Sheriff (wolf) art", line: "The taxman of Nottingham. Fat, corrupt, always liquidated." },
+        { name: "Friar Tuck", tag: "MOD", tagColor: "#00C805", slot: "card-tuck", src: "assets/cast/tuck.jpg", ph: "Drop Friar Tuck (badger) art", line: "Community mod. \u201cPraise the Lord and pass the tax rebate.\u201d" },
+        { name: "Lady Cluck", tag: "BONUS", tagColor: "#C9A24B", slot: "card-cluck", src: "assets/cast/cluck.webp", ph: "Drop Lady Cluck (hen) art", line: "Marian's bodyguard. Tackles guards like a linebacker. Zero fear." },
+        { name: "Allan-a-Dale", tag: "NARRATOR", tagColor: "#C9A24B", slot: "card-allan", src: "assets/cast/allan.webp", ph: "Drop Allan-a-Dale (rooster) art", line: "The minstrel. Narrates the whole saga. Sings \u201cOo-de-lally\u201d on loop." },
+        { name: "Trigger & Nutsy", tag: "BONUS", tagColor: "#C9A24B", slot: "card-vultures", src: "assets/cast/vultures.jpeg", ph: "Drop the vulture guards art", line: "The Sheriff's guards. One crossbow named Old Betsy. Zero brain cells." },
+        { name: "King Richard", tag: "THE BULL", tagColor: "#C9A24B", slot: "card-richard", src: "assets/cast/richard.webp", ph: "Drop King Richard (lion) art", line: "The rightful king. Away on crusade. His return = the bull market." }
+      ],
+      steps: [
+        { n: "1", title: "Get a wallet", body: "Grab a Web3 wallet and fund it with some eth.", quip: "\u201cEven a peasant can do it.\u201d" },
+        { n: "2", title: "Bridge to Robinhood L2", body: "Send your funds over to the Robinhood Layer 2 chain.", quip: "Cross the moat. Mind the crocodiles." },
+        { n: "3", title: "Swap for $ROBIN", body: "Head to the DEX, paste the contract address, and ape.", quip: "\u201cBorrow from the rich, buy the dip.\u201d" },
+        { n: "4", title: "Join the merry men", body: "Hold, HODL, and watch Nottingham cope in real time.", quip: "The Sheriff hates this one trick." }
+      ]
+    };
+  }
+
+  componentDidMount() {
+    this._reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._onScroll = () => {
+      if (this._tick) return;
+      this._tick = true;
+      requestAnimationFrame(() => this._update());
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    window.addEventListener("resize", this._onScroll, { passive: true });
+
+    // scroll reveals
+    const els = document.querySelectorAll("[data-reveal]");
+    if (this._reduced) {
+      els.forEach(el => { el.style.opacity = "1"; });
+    } else {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            const el = en.target;
+            const idx = Array.prototype.indexOf.call(el.parentNode.querySelectorAll("[data-reveal]"), el);
+            el.style.transitionDelay = Math.min(idx * 70, 350) + "ms";
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0px)";
+            this._io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(el => {
+        if (el.getBoundingClientRect().top > window.innerHeight * 0.9) {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(26px)";
+          el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+          this._io.observe(el);
+        }
+      });
+    }
+
+    // opening: title drops in
+    this._intro = !this._reduced && window.scrollY < 40;
+    if (this._intro) {
+      const copy = document.querySelector("[data-hero-copy]");
+      const t0 = performance.now();
+      const D = 1300;
+      const eo = (x) => 1 - Math.pow(1 - x, 3);
+      const seg = (k, a, b) => Math.min(1, Math.max(0, (k - a) / (b - a)));
+      const tick = (now) => {
+        if (!this._intro) return;
+        const k = Math.min(1, (now - t0) / D);
+        if (copy) {
+          const e = eo(seg(k, 0.15, 1));
+          copy.style.opacity = String(e);
+          copy.style.transform = "translateY(" + ((1 - e) * -26).toFixed(1) + "px)";
+        }
+        if (k >= 1) {
+          this._intro = false;
+          this._update();
+        } else {
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
+    }
+
+    // scroll-scrubbed motion-frame sequence: 96 pre-extracted frames drawn to canvas,
+    // frame index lerped toward the scroll target for buttery scrubbing
+    this._N = 96;
+    this._frames = [];
+    this._fIdx = 0;
+    this._fTarget = 0;
+    for (let i = 0; i < this._N; i++) {
+      const im = new Image();
+      im.src = "frames/f" + String(i).padStart(3, "0") + ".jpg";
+      this._frames.push(im);
+    }
+    const canvas = document.querySelector("[data-hero-canvas]");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      const sizeCanvas = () => {
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        canvas.width = Math.round(canvas.clientWidth * dpr);
+        canvas.height = Math.round(canvas.clientHeight * dpr);
+        this._lastDrawn = -1;
+      };
+      sizeCanvas();
+      this._sizeCanvas = sizeCanvas;
+      window.addEventListener("resize", sizeCanvas, { passive: true });
+      this._scrubRunning = true;
+      const scrub = () => {
+        if (!this._scrubRunning) return;
+        const diff = this._fTarget - this._fIdx;
+        const nearEnd = this._fTarget > this._N - 14;
+        if (Math.abs(diff) > 0.01) {
+          this._fIdx += Math.abs(diff) > 30 ? diff : diff * (nearEnd ? 0.45 : 0.3);
+          if (Math.abs(this._fTarget - this._fIdx) < 0.02) this._fIdx = this._fTarget;
+        }
+        let n = Math.max(0, Math.min(this._N - 1, Math.round(this._fIdx)));
+        while (n > 0 && !(this._frames[n].complete && this._frames[n].naturalWidth)) n--;
+        const im = this._frames[n];
+        if (n !== this._lastDrawn && im.complete && im.naturalWidth) {
+          const cw = canvas.width, ch = canvas.height;
+          const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+          const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+          ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+          this._lastDrawn = n;
+        }
+        this._applyShrub();
+        requestAnimationFrame(scrub);
+      };
+      requestAnimationFrame(scrub);
+    }
+    this._update();
+  }
+
+  componentWillUnmount() {
+    this._scrubRunning = false;
+    if (this._sizeCanvas) window.removeEventListener("resize", this._sizeCanvas);
+    window.removeEventListener("scroll", this._onScroll);
+    window.removeEventListener("resize", this._onScroll);
+    if (this._io) this._io.disconnect();
+    clearTimeout(this._ct);
+  }
+
+  _applyShrub() {
+    // shrubbery sweeps up ONLY once the displayed frame has reached the video's end
+    const shrub = document.querySelector("[data-hero-shrub]");
+    if (!shrub) return;
+    const seg = (k, a, b) => Math.min(1, Math.max(0, (k - a) / (b - a)));
+    const tStart = this.props.transitionStart ?? 0.84;
+    const p = this._p ?? 0;
+    const gate = seg(this._fIdx ?? 0, (this._N ?? 96) - 10, (this._N ?? 96) - 1.75);
+    const s = (1 - Math.pow(1 - seg(p, tStart, 1), 2)) * gate;
+    shrub.style.transform = "translateY(" + ((1 - s) * 112).toFixed(2) + "%)";
+    const back = document.querySelector("[data-shrub-layer='back']");
+    const mid = document.querySelector("[data-shrub-layer='mid']");
+    const front = document.querySelector("[data-shrub-layer='front']");
+    if (back) back.style.transform = "translateY(" + ((1 - s) * 14).toFixed(2) + "vh)";
+    if (mid) mid.style.transform = "translateY(" + ((1 - s) * 7).toFixed(2) + "vh)";
+    if (front) front.style.transform = "translateY(" + ((1 - s) * -6).toFixed(2) + "vh)";
+  }
+
+  _update() {
+    this._tick = false;
+    const wrap = document.querySelector("[data-hero-wrap]");
+    if (!wrap) return;
+    const vh = window.innerHeight;
+    const max = wrap.offsetHeight - vh;
+    const p = Math.min(1, Math.max(0, -wrap.getBoundingClientRect().top / max));
+
+    const $ = (s) => document.querySelector(s);
+    const landed = $("[data-arrow-landed]");
+    const copy = $("[data-hero-copy]");
+    const hint = $("[data-hero-hint]");
+
+    if (this._reduced) {
+      if (landed) landed.style.opacity = "1";
+      if (hint) hint.style.animation = "none";
+      this._fTarget = this._N - 1;
+      this._fIdx = this._N - 1.01;
+      const rp = $("[data-parchment]");
+      if (rp) rp.style.clipPath = "none";
+      const rb = $("[data-roll-bar]");
+      if (rb) rb.style.top = "100%";
+      return;
+    }
+
+    const seg = (k, a, b) => Math.min(1, Math.max(0, (k - a) / (b - a)));
+
+    // scrub target: the transition begins one beat after the final frame,
+    // with extra scroll weight on the final third (the shot) so it plays slower
+    const tStart = this.props.transitionStart ?? 0.84;
+    const vEnd = Math.max(0.4, tStart - 0.02);
+    const vp = seg(p, 0, vEnd);
+    this._fTarget = (1 - Math.pow(1 - vp, 1.3)) * (this._N - 1);
+    this._p = p;
+    this._applyShrub();
+
+    if (landed) landed.style.opacity = p > 0.95 ? "1" : "0";
+
+    // parchment scroll: rolled up on first reveal, unravels as you scroll into it
+    const parch = $("[data-parchment]");
+    if (parch) {
+      const hold = $("[data-lore-hold]");
+      const pr = (hold || parch.parentNode).getBoundingClientRect();
+      const q = seg(-pr.top / (vh * 1.6), 0.03, 1);
+      const qe = 1 - Math.pow(1 - q, 2.2);
+      parch.style.clipPath = "inset(0 0 " + ((1 - qe) * 100).toFixed(2) + "% 0)";
+      const bar = $("[data-roll-bar]");
+      if (bar) bar.style.top = (qe * 100).toFixed(2) + "%";
+    }
+    if (copy && !this._intro) copy.style.opacity = String(Math.max(0, 1 - p * 2.2));
+    if (hint) hint.style.opacity = String(Math.max(0, 1 - p * 4));
+
+    // gutter feather trail = whole-page progress
+    const doc = document.documentElement;
+    const total = Math.min(1, window.scrollY / Math.max(1, doc.scrollHeight - vh));
+    const feathers = document.querySelectorAll("[data-gutter] [data-f]");
+    feathers.forEach((el, i) => {
+      el.style.opacity = total >= (i + 0.5) / feathers.length ? "0.9" : "0.18";
+    });
+  }
+}
+</script>
+</body>
+</html>
